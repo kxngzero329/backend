@@ -1,15 +1,18 @@
+# backend/main.py
 from fastapi import FastAPI
-from run_spider import run_pnp_spider
+from run_spider import run_spider
 import json
+import os
 
 app = FastAPI()
 
-@app.get("/scrape/pnp")
-def scrape_pnp():
-    try:
-        run_pnp_spider()
-        with open("scraper/data/results.json") as f:
-            data = json.load(f)
-        return {"success": True, "results": data}
-    except Exception as e:
-        return {"success": False, "error": str(e)}
+DATA_FILE = os.path.join(os.path.dirname(__file__), "scraper/data/results.json")
+
+@app.post("/scrape")
+def scrape():
+    run_spider()
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            results = json.load(f)
+        return {"success": True, "results": results}
+    return {"success": False, "results": []}
