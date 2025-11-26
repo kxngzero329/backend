@@ -1,0 +1,25 @@
+project/
+│
+├── backend/
+│   ├── main.py                # FastAPI entry
+│   ├── run_spider.py          # Trigger Scrapy programmatically
+│   │
+│   ├── scraper/
+│   │   ├── scrapy.cfg
+│   │   ├── scraper/
+│   │   │   ├── __init__.py
+│   │   │   ├── items.py
+│   │   │   ├── pipelines.py
+│   │   │   ├── settings.py
+│   │   │   └── spiders/
+│   │   │       └── pnp_spider.py
+│   │
+│   ├── data/
+│       └── results.json   
+
+
+pip install scrapy scrapy-playwright fastapi uvicorn
+playwright install
+
+Run the API
+uvicorn main:app --reload
